@@ -140,7 +140,7 @@ load_nflmockdraftdatabase_consensus_board <- function(year){
   
   cfb_teams <- cfbfastR::load_cfb_teams()
   
-  draft_players <- draft_board |> 
+  draft_players <- consensus_board |> 
     left_join(select(cfb_teams, school, abbreviation), 
               by = c("college" = "school")) |>  
     left_join(select(cfb_teams, alt_name1, abbreviation), 
@@ -166,12 +166,14 @@ load_nflmockdraftdatabase_consensus_board <- function(year){
   return(draft_players)
 }
 
+YEAR <- 2024
+
 free_agents <- load_spotrac_free_agents()
 
-draft_board <- load_nflmockdraftdatabase_consensus_board(2024)
+draft_board <- load_nflmockdraftdatabase_consensus_board(YEAR)
 
 new_players <- bind_rows(free_agents, draft_board) |> 
   arrange(position, player)
 
-saveRDS(new_players, paste0("Data/", current_year, "_new_players.rds"))
+saveRDS(new_players, paste0("Data/", YEAR, "_new_players.rds"))
 
