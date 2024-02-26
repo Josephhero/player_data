@@ -175,5 +175,5 @@ draft_board <- load_nflmockdraftdatabase_consensus_board(YEAR)
 new_players <- bind_rows(free_agents, draft_board) |> 
   arrange(position, player)
 
-saveRDS(new_players, paste0("Data/", YEAR, "_new_players.rds"))
+saveRDS(new_players, paste0("Data/", "new_players.rds"))
 
