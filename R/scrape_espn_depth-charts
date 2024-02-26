@@ -1,4 +1,6 @@
-library(tidyverse)
+library(dplyr)
+library(tidyr)
+library(stringr)
 library(nflreadr)
 library(janitor)
 library(rvest)
@@ -161,8 +163,17 @@ df_clean <- df_raw |>
     TRUE ~ position
   ), .after = position) |> 
   filter(!is.na(name)) |> 
-  mutate(rank = row_number(), .by = team) |> 
+  mutate(rank = row_number(), .by = team_abbr) |> 
   arrange(team_abbr, rank, depth)
 
-saveRDS(df_clean, paste0("Data/", YEAR, "_ESPN_Depth_Charts.rds"))
+depth_charts <- df_clean |> 
+  select(team_abbr, position_roster, position_depth_chart, name)
+
+defense_style <- df_clean |> 
+  select(team_abbr, def_style) |> 
+  distinct()
+
+saveRDS(depth_charts, paste0("Data/", YEAR, "_espn_depth_charts.rds"))
+
+saveRDS(defense_style, paste0("Data/", YEAR, "_defense_style.rds"))
 
