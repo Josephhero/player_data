@@ -166,7 +166,7 @@ load_nflmockdraftdatabase_consensus_board <- function(year){
   return(draft_players)
 }
 
-YEAR <- 2024
+YEAR <- as.integer(format(Sys.Date(), "%Y"))
 
 free_agents <- load_spotrac_free_agents()
 
