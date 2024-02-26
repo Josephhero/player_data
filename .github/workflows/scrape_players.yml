@@ -31,6 +31,9 @@ jobs:
       - name: Scrape Players
         run: Rscript -e 'source("R/scrape_players.R")'
 
+      - name: Scrape Depth Charts
+        run: Rscript -e 'source("R/scrape_espn_depth_charts.R")'
+
       - name: Commit results
         run: |
           git config --local user.email "actions@github.com"
