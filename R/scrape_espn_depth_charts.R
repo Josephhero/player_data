@@ -173,8 +173,8 @@ defense_style <- df_clean |>
   select(team_abbr, def_style) |> 
   distinct()
 
-saveRDS(depth_charts, paste0("Data/", YEAR, "_espn_depth_charts.rds"))
+saveRDS(depth_charts, paste0("Data/", "espn_depth_charts.rds"))
 
-saveRDS(defense_style, paste0("Data/", YEAR, "_defense_style.rds"))
+saveRDS(defense_style, paste0("Data/", "espn_defense_style.rds"))
 
 
