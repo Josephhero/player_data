@@ -149,7 +149,7 @@ df_clean <- df_raw |>
     position %in% c("LILB", "RILB", "MLB", "WLB", "SLB") ~ "LB", 
     position %in% c("LDE", "RDE") & def_style == "Base 3-4 D" ~ "DT", 
     position %in% c("LDE", "RDE") ~ "EDGE", 
-    position %in% c("LDT", "RDT", "NT") ~ "DT", 
+    position %in% c("LDT", "RDT", "NT") ~ "DL", 
     position %in% c("FS", "SS") ~ "S", 
     position %in% c("LT", "RT") ~ "OT", 
     position %in% c("LCB", "RCB") ~ "CB", 
