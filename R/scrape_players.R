@@ -161,6 +161,7 @@ load_nflmockdraftdatabase_consensus_board <- function(year){
       TRUE ~ abbr
     )) |> 
     mutate(player = paste0(player, " (", abbr, ")")) |> 
+    mutate(position = if_else(position == "FB", "RB", position)) |> 
     select(player, position)
   
   return(draft_players)
