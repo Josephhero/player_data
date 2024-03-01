@@ -50,6 +50,7 @@ for(i in 1:32){
       rank == 1 & position == "WR" ~ "LWR", 
       rank == 2 & position == "WR" ~ "RWR", 
       rank == 3 & position == "WR" ~ "SWR", 
+      position == "FB" ~ "RB", 
       TRUE ~ position
     )) |> 
     select(-rank)
