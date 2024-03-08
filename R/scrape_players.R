@@ -17,18 +17,18 @@ load_spotrac_free_agents <- function(){
     html_text()
   
   position <- read_html(url) |> 
-    html_elements(".player+ .center") |> 
+    html_elements(".center:nth-child(2)") |> 
     html_text()
   
   old_team <- read_html(url) |> 
-    html_elements(".center.xs-hide+ .center") |> 
+    html_elements(".center:nth-child(4)") |> 
     html_text()
   
   new_team <- read_html(url) |> 
-    html_elements(".xs-hide~ .center.xs-hide") |> 
+    html_elements(".center:nth-child(5)") |> 
     html_text()
   
-  free_agents1<- tibble::tibble(
+  free_agents<- tibble::tibble(
     player = str_trim(players), 
     position = str_trim(position), 
     old_team = str_trim(old_team), 
@@ -36,32 +36,13 @@ load_spotrac_free_agents <- function(){
   ) |> 
     filter(old_team != "From") |> 
     mutate(rank = row_number(), .before = player) |> 
-    separate_wider_delim(player, 
-                         delim = " ", 
-                         names = c("old", "new"), 
-                         too_many = "merge") |> 
-    mutate(new = str_replace(new,',',''))
-  
-  free_agents_good <- free_agents1 |> 
-    filter(str_starts(new, "Jr.", negate = TRUE),  
-           str_starts(new, "II", negate = TRUE),   
-           str_starts(new, "III", negate = TRUE),  
-           str_starts(new, "IV", negate = TRUE))
-  
-  free_agents_problem <- free_agents1 |> 
-    filter(str_starts(new, "Jr.") | 
-             str_starts(new, "II") |  
-             str_starts(new, "III") | 
-             str_starts(new, "IV")) |> 
-    separate_wider_delim(new, 
-                         delim = " ", 
-                         names = c("old2", "new"), 
-                         too_many = "merge") |> 
-    select(-old2)
-  
-  
-  
-  free_agents <- bind_rows(free_agents_good, free_agents_problem) |> 
+    mutate(player = str_replace_all(player,',','')) |> 
+    mutate(player = str_replace_all(player,' Jr.','')) |> 
+    mutate(player = str_replace_all(player,' II','')) |> 
+    mutate(player = str_replace_all(player,' III','')) |> 
+    mutate(player = str_replace_all(player,' IV','')) |> 
+    tidyr::separate(player,c("old","new"), "(?<=[a-z])(?=[A-Z])", 
+                    extra = "merge", remove = FALSE) |> 
     arrange(rank) |> 
     mutate(name = nflreadr::clean_player_names(new), .after = "new") |> 
     select(-old, -new) |> 
@@ -177,4 +158,10 @@ new_players <- bind_rows(free_agents, draft_board) |>
   arrange(position, player)
 
 saveRDS(new_players, paste0("Data/", "new_players.rds"))
+
+
+
+
+
+
 
