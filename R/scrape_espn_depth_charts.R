@@ -165,7 +165,7 @@ df_clean <- df_raw |>
   ), .after = position) |> 
   filter(!is.na(name)) |> 
   mutate(rank = row_number(), .by = team_abbr) |> 
-  arrange(team_abbr, rank, depth)
+  arrange(team_abbr, position_roster, depth)
 
 depth_charts <- df_clean |> 
   select(team_abbr, position_roster, position_depth_chart, name)
