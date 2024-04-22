@@ -24,11 +24,12 @@ jobs:
             any::cli
             any::glue
             any::pacman
-      - name: Install cfbfastR
-        run: Rscript -e 'source("R/install_cfbfastR.R")'
 
       - name: Check out repository
         uses: actions/checkout@v3
+
+      - name: Install cfbfastR
+        run: Rscript -e 'source("R/install_cfbfastR.R")'
 
       - name: Scrape Players
         run: Rscript -e 'source("R/scrape_players.R")'
