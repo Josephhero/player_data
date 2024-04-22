@@ -25,8 +25,7 @@ jobs:
             any::glue
             any::pacman
       - name: Install cfbfastR
-        run: | 
-          Rscript -e "pacman::p_load_current_gh("sportsdataverse/cfbfastR", dependencies = TRUE, update = TRUE)"
+        run: Rscript -e 'source("R/install_cfbfastR.R")'
 
       - name: Check out repository
         uses: actions/checkout@v3
