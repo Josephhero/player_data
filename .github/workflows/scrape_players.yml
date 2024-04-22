@@ -23,7 +23,6 @@ jobs:
             any::nflreadr
             any::cli
             any::glue
-            #any::cfbfastR
             any::pacman
       - name: Install cfbfastR
         run: | 
