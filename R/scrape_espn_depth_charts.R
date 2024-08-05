@@ -153,7 +153,7 @@ df_clean <- df_raw |>
     position %in% c("LDT", "RDT", "NT") ~ "DL", 
     position %in% c("FS", "SS") ~ "S", 
     position %in% c("LT", "RT") ~ "OT", 
-    position %in% c("LCB", "RCB") ~ "CB", 
+    position %in% c("LCB", "RCB", "NB") ~ "CB", 
     TRUE ~ position
   ), .after = position) |> 
   mutate(position_depth_chart = case_when(
